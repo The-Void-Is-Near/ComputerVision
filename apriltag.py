@@ -6,7 +6,6 @@ def ignore(Error = None):
    
 # Specifying AprilTag attributes
 at_detector = Detector(families="tag36h11",nthreads=1,quad_decimate=1.0,quad_sigma=0.0,refine_edges=1,decode_sharpening=0.25,debug=0)
-#at_detector = Detector(families="tag16h5",nthreads=1,quad_decimate=1.0,quad_sigma=0.0,refine_edges=1,decode_sharpening=0.25,debug=0)
 # Setting Camera Port to Webcam
 vid = cv2.VideoCapture(0)
 
@@ -14,7 +13,6 @@ while(True):
   # Reading Grayscale Image
   ret, Image = vid.read()
   Image = cv2.cvtColor(Image, cv2.COLOR_BGR2GRAY)
-  #Image = cv2.GaussianBlur(Image,(1,1),cv2.BORDER_DEFAULT)
   try:
     # Detect all Tags in Captured Frame
     Answer = at_detector.detect(img = Image)
@@ -29,13 +27,8 @@ while(True):
       ptC = (int(ptC[0]), int(ptC[1]))
       ptD = (int(ptD[0]), int(ptD[1]))
       ptA = (int(ptA[0]), int(ptA[1]))
-      ptx = (ptA,ptC)
       (cX, cY) = (int(apriltag.center[0]), int(apriltag.center[1]))
       #Draw
-      
-      cv2.line(Image, ptx[0], ptx[1], (0,0,0), 2)
-      cv2.line(Image, (ptx[0])*-1, (ptx[1])*-1, (0,0,0), 2)
-
       cv2.line(Image, ptA, ptB, (0, 255, 0), 2)
       cv2.line(Image, ptB, ptC, (0, 255, 0), 2)
       cv2.line(Image, ptC, ptD, (0, 255, 0), 2)
